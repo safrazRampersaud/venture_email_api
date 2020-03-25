@@ -19,18 +19,19 @@ import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 import java.io.*;
 import java.security.GeneralSecurityException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class SEV_ProtoMain {
-    private static final String APPLICATION_NAME = "Gmail API - SEP";
+    private static final String APPLICATION_NAME = "SEV_Prototype";
     private static final String SUBJECT_TOKEN = "<>";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
 
     /**
      * Global instance of the scopes required by this quickstart.
-     * If modifying these scopes, delete your previously saved tokens/ folder.
+     * If modifying these scopes, delete your previously saved tokens / folder.
      */
     private static final List<String> SCOPES = Collections.singletonList(GmailScopes.MAIL_GOOGLE_COM);
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
@@ -43,6 +44,11 @@ public class SEV_ProtoMain {
      */
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
         // Load client secrets.
+
+        // Here is where access to a DB should work
+
+
+
         InputStream in = SEV_ProtoMain.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
         if (in == null) {
             throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
@@ -101,11 +107,14 @@ public class SEV_ProtoMain {
         String user = "safraz.rampersaud@gmail.com";
         ListMessagesResponse messagesResponse = service.users().messages().list(user).execute();
 
-        Gmail.Users.Messages.List request = service.users().messages().list("me")
+        Gmail.Users.Messages.List request = service.users().messages().list(user)
                 // or setQ("is:sent after:yyyy/MM/dd before:yyyy/MM/dd")
                 .setLabelIds(Arrays.asList("INBOX"))
-                .setQ("after:" + gmailFormat(new Date("2020/02/27")) + " "+
-                        "before:"+ gmailFormat(new Date("2020/02/29")))
+//                .setQ("after:" + gmailFormat(new Date("2020/02/27")) + " "+
+//                        "before:"+ gmailFormat(new Date("2020/02/29")))
+                .setQ("after:" + gmailFormat(new Date("2020/03/25")) + " "+
+                        "before:"+ gmailFormat(new Date("2020/03/26")))
+
                 .setMaxResults(1000L);
         List<Message> list = new LinkedList<>();
         ListMessagesResponse response = null;
@@ -126,10 +135,22 @@ public class SEV_ProtoMain {
                 String accessFrom = getMimeMessage(service, user, executeResponse.getId()).getHeader("From")[0];
                 String accessTo = getMimeMessage(service, user, executeResponse.getId()).getHeader("To")[0];
                 String accessSubject = getMimeMessage(service, user, executeResponse.getId()).getHeader("Subject")[0];
+                Long accessSendTime = executeResponse.getInternalDate();
+
+            DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss Z");
+            formatter.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
+
+            formatter.format(accessSendTime);
+
+            System.out.println(formatter.format(accessSendTime));
+
+            formatter.setTimeZone(TimeZone.getTimeZone("America/New_York"));
+            System.out.println(formatter.format(accessSendTime));
 
                     System.out.println("From:\t" + accessFrom);
                     System.out.println("To:\t" + accessTo);
                     System.out.println("Subject:\t" + accessSubject);
+                    System.out.println("Internal Date:\t" + accessSendTime);
                     System.out.println();
 
                     if(accessSubject.split(SUBJECT_TOKEN).length > 1){
