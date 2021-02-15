@@ -103,17 +103,17 @@ public class SEV_ProtoMain {
                 .setApplicationName(APPLICATION_NAME)
                 .build();
 
-        // Print the labels in the user's account.
+        /*** Print the labels in the user's account.
+         * REPLACE WITH CLIENT EMAILS LATER, TEST WITH MY EMAIL
+         ***/
         String user = "safraz.rampersaud@gmail.com";
         ListMessagesResponse messagesResponse = service.users().messages().list(user).execute();
 
         Gmail.Users.Messages.List request = service.users().messages().list(user)
                 // or setQ("is:sent after:yyyy/MM/dd before:yyyy/MM/dd")
                 .setLabelIds(Arrays.asList("INBOX"))
-//                .setQ("after:" + gmailFormat(new Date("2020/02/27")) + " "+
-//                        "before:"+ gmailFormat(new Date("2020/02/29")))
-                .setQ("after:" + gmailFormat(new Date("2020/03/25")) + " "+
-                        "before:"+ gmailFormat(new Date("2020/03/26")))
+                .setQ("after:" + gmailFormat(new Date("2021/03/14")) + " "+
+                        "before:"+ gmailFormat(new Date("2021/3/13")))
 
                 .setMaxResults(1000L);
         List<Message> list = new LinkedList<>();
@@ -195,11 +195,11 @@ public class SEV_ProtoMain {
 
                         ProfileStructure profileInstance = new ProfileStructure(
                             nameBuilderAccess,
-                            "Data Scientist", //Access from external source
+                            "Data Scientist", //Access from external source, will point to source later
                             emailBuilderAccess,
                             companyBuilderAccess,
                             introAccess,
-                            "CEO", //Access from external source
+                            "CEO", //Access from external source, will point to source later
                             secondaryAccess,
                             fromEmailAccess,
                             fromCompanyAccess

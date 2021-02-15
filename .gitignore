@@ -4,6 +4,8 @@
 **/build/
 **/.gradle
 **/.idea
+**/tokens/
+**/src/main/resources/
 
 # Package Files #
 *.jar
