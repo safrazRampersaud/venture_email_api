@@ -24,7 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class main {
-    private static final String APPLICATION_NAME = "SEV_Prototype";
+    private static final String APPLICATION_NAME = "Venture_Gmail_API_Access";
     private static final String SUBJECT_TOKEN = "<>";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
@@ -112,9 +112,8 @@ public class main {
         Gmail.Users.Messages.List request = service.users().messages().list(user)
                 // or setQ("is:sent after:yyyy/MM/dd before:yyyy/MM/dd")
                 .setLabelIds(Arrays.asList("INBOX"))
-                .setQ("after:" + gmailFormat(new Date("2021/03/14")) + " "+
-                        "before:"+ gmailFormat(new Date("2021/3/13")))
-
+                .setQ("after:" + gmailFormat(new Date("2020/03/06")) + " "+
+                        "before:"+ gmailFormat(new Date("2020/3/05")))
                 .setMaxResults(1000L);
         List<Message> list = new LinkedList<>();
         ListMessagesResponse response = null;
