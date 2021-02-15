@@ -23,7 +23,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class SEV_ProtoMain {
+public class main {
     private static final String APPLICATION_NAME = "SEV_Prototype";
     private static final String SUBJECT_TOKEN = "<>";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
@@ -49,7 +49,7 @@ public class SEV_ProtoMain {
 
 
 
-        InputStream in = SEV_ProtoMain.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
+        InputStream in = main.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
         if (in == null) {
             throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
         }
